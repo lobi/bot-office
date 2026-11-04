@@ -52,9 +52,10 @@ aside h3{margin:0 0 8px;font-size:.95rem}
 .empty{color:var(--mut);font-size:.82rem;margin:0}
 #lines{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:visible}
 #lines path{fill:none;stroke:#5b6fd6;stroke-width:2;stroke-dasharray:3 5;opacity:.75}
-#panel{position:fixed;z-index:40;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.2);padding:18px;transition:transform .25s}
+#panel{position:fixed;z-index:40;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.2);padding:18px;transition:transform .25s,visibility .25s}
 @media(min-width:700px){#panel{top:0;right:0;bottom:0;width:340px;transform:translateX(105%)}#panel.open{transform:none}}
 @media(max-width:699px){#panel{left:0;right:0;bottom:0;border-radius:20px 20px 0 0;transform:translateY(105%);max-height:70vh;overflow:auto}#panel.open{transform:none}}
+#panel:not(.open){visibility:hidden}
 #panel h3{margin:0 0 2px;font-size:1.15rem}
 #panel dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.9rem}
 #panel dt{color:var(--mut)}#panel dd{margin:0;font-weight:500}
