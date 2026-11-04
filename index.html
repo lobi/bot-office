@@ -29,7 +29,7 @@ input[type=search]{border:1px solid var(--line);border-radius:99px;padding:5px 1
 .chips::-webkit-scrollbar{display:none}.chip{flex:none;white-space:nowrap}
 #toggleLines[aria-pressed=true]{background:var(--ink);color:#fff}
 .upd-m{display:none}
-@media(max-width:699px){header{padding:8px 10px}.r1 h1{font-size:1rem}.r1 .t,.lbl,.dsk{display:none}.counter{font-size:.78rem;white-space:nowrap}.ib{padding:5px 9px}.r2 input{flex:0 0 96px;max-width:96px}.upd-m{display:block;padding:0 14px;margin:8px auto -6px;max-width:1300px}}
+@media(max-width:699px){header{padding:8px 10px}.r1 h1{font-size:.95rem}.r1{gap:6px}.r1 .t,.lbl,.dsk{display:none}.counter{font-size:.78rem;white-space:nowrap}.ib{padding:4px 8px}.r2 input{flex:0 0 96px;max-width:96px}.upd-m{display:block;padding:0 14px;margin:8px auto -6px;max-width:1300px}}
 .walking .nm,.walking .tk{opacity:0}
 main{display:grid;grid-template-columns:1fr;gap:14px;padding:14px;max-width:1300px;margin:0 auto;position:relative}
 @media(min-width:900px){main{grid-template-columns:2.2fr 1fr}}
@@ -144,7 +144,7 @@ body.paused *{animation-play-state:paused!important}
 <body>
 <header>
  <div class="row r1">
-  <h1>🏢 <span class="t">Tâm's </span>Bot Office</h1>
+  <h1><span class="t">🏢 </span><span class="t">Tâm's </span>Bot Office</h1>
   <span class="counter" id="counter" aria-live="polite"></span>
   <span class="badge" id="offline" hidden>Offline</span>
   <span class="spacer"></span>
