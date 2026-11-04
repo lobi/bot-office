@@ -23,6 +23,14 @@ h1{font-size:1.15rem;margin:0 8px 0 0}
 .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
 input[type=search]{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:.85rem;min-width:0;flex:1 1 140px;max-width:240px;background:#fff}
 .spacer{flex:1}
+.r1{flex-wrap:nowrap}.r1 h1{white-space:nowrap}
+.r2{display:flex;gap:8px;align-items:center;margin-top:8px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex:1;min-width:0;padding:2px}
+.chips::-webkit-scrollbar{display:none}.chip{flex:none;white-space:nowrap}
+#toggleLines[aria-pressed=true]{background:var(--ink);color:#fff}
+.upd-m{display:none}
+@media(max-width:699px){header{padding:8px 10px}.r1 h1{font-size:1rem}.r1 .t,.lbl,.dsk{display:none}.counter{font-size:.78rem;white-space:nowrap}.ib{padding:5px 9px}.r2 input{flex:0 0 96px;max-width:96px}.upd-m{display:block;padding:0 14px;margin:8px auto -6px;max-width:1300px}}
+.walking .nm,.walking .tk{opacity:0}
 main{display:grid;grid-template-columns:1fr;gap:14px;padding:14px;max-width:1300px;margin:0 auto;position:relative}
 @media(min-width:900px){main{grid-template-columns:2.2fr 1fr}}
 #office{display:grid;gap:12px;grid-template-columns:1fr;position:relative}
@@ -135,21 +143,22 @@ body.paused *{animation-play-state:paused!important}
 </head>
 <body>
 <header>
- <div class="row">
-  <h1>🏢 Tâm's Bot Office</h1>
+ <div class="row r1">
+  <h1>🏢 <span class="t">Tâm's </span>Bot Office</h1>
   <span class="counter" id="counter" aria-live="polite"></span>
   <span class="badge" id="offline" hidden>Offline</span>
   <span class="spacer"></span>
-  <span class="meta" id="updated"></span>
-  <button class="btn" id="fxBtn" aria-pressed="true">✨ Hiệu ứng: Bật</button>
-  <button class="btn" id="refresh" aria-label="Làm mới dữ liệu">↻ Làm mới</button>
+  <span class="meta dsk" id="updated"></span>
+  <button class="btn ib" id="toggleLines" aria-pressed="false" aria-label="Đường báo cáo" title="Đường báo cáo">┄<span class="lbl"> Đường báo cáo</span></button>
+  <button class="btn ib" id="fxBtn" aria-pressed="true" aria-label="Hiệu ứng: Bật" title="Hiệu ứng">✨<span class="lbl" id="fxLbl"> Hiệu ứng: Bật</span></button>
+  <button class="btn ib" id="refresh" aria-label="Làm mới dữ liệu" title="Làm mới">↻<span class="lbl"> Làm mới</span></button>
  </div>
- <div class="row" style="margin-top:8px" role="group" aria-label="Lọc theo trạng thái" id="chips"></div>
- <div class="row" style="margin-top:8px">
+ <div class="r2">
   <input type="search" id="q" placeholder="Tìm bot…" aria-label="Tìm bot theo tên">
-  <button class="chip" id="toggleLines" aria-pressed="false">┄ Đường báo cáo</button>
+  <div class="chips" role="group" aria-label="Lọc theo trạng thái" id="chips"></div>
  </div>
 </header>
+<div class="meta upd-m" id="updatedM" aria-hidden="true"></div>
 <main>
  <div style="position:relative">
   <section id="office" aria-label="Văn phòng"></section>
@@ -299,15 +308,16 @@ async function load(){
  }catch(e){$('offline').hidden=false;if(!hasData){apply(SAMPLE);updatedAt=null}}
  render();
 }
-function tick(){const t=updatedAt?Date.parse(updatedAt):lastOk;if(!t){$('updated').textContent='Dữ liệu mẫu';return}
+function tick(){tick0();$('updatedM').textContent=$('updated').textContent}
+function tick0(){const t=updatedAt?Date.parse(updatedAt):lastOk;if(!t){$('updated').textContent='Dữ liệu mẫu';return}
  const m=Math.max(0,Math.round((Date.now()-t)/60000));$('updated').textContent=m<1?'Cập nhật vừa xong':`Cập nhật ${m} phút trước`}
 $('refresh').onclick=load;
 $('q').oninput=e=>{query=e.target.value.trim().toLowerCase();applyFilter()};
-$('toggleLines').onclick=e=>{showLines=!showLines;e.currentTarget.setAttribute('aria-pressed',showLines);drawLines()};
+$('toggleLines').onclick=e=>{showLines=!showLines;$('toggleLines').setAttribute('aria-pressed',showLines);drawLines()};
 addEventListener('resize',drawLines);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let fx=localStorage.getItem('botoffice.fx');fx=fx===null?!RM:fx==='1';
-function setFx(v){fx=v;document.body.classList.toggle('fx',v);const b=$('fxBtn');b.textContent='✨ Hiệu ứng: '+(v?'Bật':'Tắt');b.setAttribute('aria-pressed',v);localStorage.setItem('botoffice.fx',v?'1':'0')}
+function setFx(v){fx=v;document.body.classList.toggle('fx',v);const b=$('fxBtn');$('fxLbl').textContent=' Hiệu ứng: '+(v?'Bật':'Tắt');b.setAttribute('aria-label','Hiệu ứng: '+(v?'Bật':'Tắt'));b.setAttribute('aria-pressed',v);localStorage.setItem('botoffice.fx',v?'1':'0')}
 $('fxBtn').onclick=()=>setFx(!fx);setFx(fx);
 document.addEventListener('visibilitychange',()=>document.body.classList.toggle('paused',document.hidden));
 let walking=false;
