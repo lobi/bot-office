@@ -1,0 +1,16 @@
+{
+  "updatedAt": "2026-11-04T12:40:00Z",
+  "bots": [
+    {"id":"bpm","name":"Product BPM","role":"Trưởng nhóm sản phẩm SwiftGas","room":"swiftgas","status":"waiting","currentTask":"Chờ anh duyệt PR #94","reportsTo":"tam"},
+    {"id":"dev","name":"Dev · Senior SWE","role":"Lập trình viên chính SwiftGas","room":"swiftgas","status":"working","currentTask":"PR merge master vào develop","reportsTo":"bpm"},
+    {"id":"qc","name":"QC Engineer","role":"Kiểm thử chất lượng","room":"swiftgas","status":"idle","currentTask":"","reportsTo":"bpm"},
+    {"id":"scout","name":"Scout","role":"Nghiên cứu & tài liệu","room":"library","status":"working","currentTask":"Dựng Bot Office","reportsTo":"tam"},
+    {"id":"cafe","name":"Café Manager","role":"Quản lý quán cà phê","room":"projects","status":"idle","currentTask":"","reportsTo":"tam"},
+    {"id":"farm","name":"Farm Manager","role":"Quản lý trang trại","room":"projects","status":"idle","currentTask":"","reportsTo":"tam"},
+    {"id":"fabric","name":"Fabric","role":"Dự án vải & may mặc","room":"projects","status":"idle","currentTask":"","reportsTo":"tam"},
+    {"id":"dino","name":"Dino","role":"Bán hàng lại trên Shopee","room":"commerce","status":"idle","currentTask":"","reportsTo":"tam"},
+    {"id":"chotot","name":"ChoTot Assistant","role":"Quản lý tin đăng Chợ Tốt","room":"commerce","status":"idle","currentTask":"","reportsTo":"tam"},
+    {"id":"grok","name":"Grok Bot","role":"Trợ lý tổng hợp","room":"lobby","status":"idle","currentTask":"","reportsTo":"tam"},
+    {"id":"egg","name":"dr eggbot","role":"Thiết kế bot mới","room":"lobby","status":"idle","currentTask":"","reportsTo":"tam"}
+  ]
+}
