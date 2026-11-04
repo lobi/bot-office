@@ -61,7 +61,76 @@ aside h3{margin:0 0 8px;font-size:.95rem}
 #panel dt{color:var(--mut)}#panel dd{margin:0;font-weight:500}
 .close{position:absolute;top:10px;right:10px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ===== Motion (only when body.fx) ===== */
+body:not(.fx) *,body:not(.fx) *::before{animation:none!important;transition:none!important}
+body.paused *{animation-play-state:paused!important}
+.fx .room{animation:roomIn .5s cubic-bezier(.2,.8,.3,1.2) both;animation-delay:calc(var(--i)*90ms)}
+@keyframes roomIn{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.bot{transition:transform .35s cubic-bezier(.3,1.5,.5,1),opacity .3s}
+.bot.hide{transform:scale(.85)}
+.fx .bot:active svg{animation:bounce .4s}
+@keyframes bounce{40%{transform:scale(.9,1.08)}70%{transform:scale(1.05,.95)}}
+.fx .char{animation:bob 3.2s ease-in-out infinite;animation-delay:var(--d);transform-box:view-box}
+@keyframes bob{50%{transform:translateY(-1.5px)}}
+.fx .head{animation:turn 9s ease-in-out infinite;animation-delay:var(--d);transform-box:fill-box;transform-origin:50% 100%}
+@keyframes turn{0%,80%,100%{transform:none}85%{transform:rotate(-7deg)}92%{transform:rotate(5deg)}}
+.fx .eyes{animation:blink 5s infinite;animation-delay:var(--d);transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,94%,100%{transform:none}97%{transform:scaleY(.1)}}
+.fx .working .screen-line{animation:flick 1.2s infinite}
+@keyframes flick{50%{opacity:.35}}
+.fx .scroll{animation:scrollc 2.4s linear infinite}
+@keyframes scrollc{to{transform:translateY(-10px)}}
+.fx .working .hands{animation:type .3s steps(2) infinite}
+.part{opacity:0}
+.fx .working .part{animation:float 2.6s ease-out infinite}
+.fx .working .part:nth-of-type(2){animation-delay:1.3s}
+@keyframes float{0%{opacity:0;transform:translateY(0)}30%{opacity:.9}100%{opacity:0;transform:translateY(-16px)}}
+.bubble{display:none}.waiting .bubble{display:block}
+.fx .waiting .bubble{animation:floatq 2.4s ease-in-out infinite}
+@keyframes floatq{50%{transform:translateY(-3px)}}
+.fx .waiting .light{animation:glow 1.6s ease-in-out infinite}
+@keyframes glow{50%{opacity:.55;transform:scale(1.35)}}
+.bang{display:none}.blocked .bang{display:block}
+.fx .blocked svg{animation:shake 2.5s infinite}
+@keyframes shake{0%,86%,100%{transform:none}88%,94%{transform:translateX(-2px)}91%,97%{transform:translateX(2px)}}
+.fx .pulse::after{content:"";position:absolute;left:50%;top:6px;width:14px;height:14px;margin-left:-7px;border-radius:50%;border:3px solid var(--accent);animation:ripple 1s ease-out 3}
+.bot{position:relative}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+.fx .steam path{animation:steam 2.8s ease-in infinite}.fx .steam path:nth-child(2){animation-delay:1.4s}
+@keyframes steam{0%{opacity:0;transform:translateY(4px)}40%{opacity:.8}100%{opacity:0;transform:translateY(-10px)}}
+.fx .sway{animation:sway 3.5s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes sway{50%{transform:rotate(8deg)}}
+.fx .hop{animation:hop 7s infinite}
+@keyframes hop{0%,80%,100%{transform:none}84%{transform:translateY(-6px)}88%{transform:none}92%{transform:translateY(-4px)}}
+.fx .slide{animation:slide 6s ease-in-out infinite}
+@keyframes slide{0%,60%,100%{transform:none}75%{transform:translateX(5px)}}
+.fx .flip{animation:flip 4s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}
+@keyframes flip{0%,70%,100%{transform:none}85%{transform:scaleX(-1)}}
+.fx .wobble{animation:wob 3s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes wob{0%,60%,100%{transform:none}70%{transform:rotate(-9deg)}80%{transform:rotate(7deg)}90%{transform:rotate(-3deg)}}
+.rays{position:absolute;inset:-20%;z-index:0;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(255,255,255,.0) 0 40px,rgba(255,250,220,.35) 40px 70px,rgba(255,255,255,0) 70px 140px)}
+.fx .rays{animation:rays 18s ease-in-out infinite alternate}
+@keyframes rays{to{transform:translateX(12%)}}
+.deco{position:absolute;top:6px;right:10px;z-index:1;width:40px;height:40px}
+.fx .hand-m{animation:spin 60s linear infinite;transform-origin:20px 20px}
+.fx .hand-h{animation:spin 720s linear infinite;transform-origin:20px 20px}
+.fx .fan{animation:spin 1.4s linear infinite;transform-origin:20px 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fx .cloud{animation:cloud 14s linear infinite}
+@keyframes cloud{from{transform:translateX(-30px)}to{transform:translateX(40px)}}
+.bot.walking{z-index:6;transition:transform 2.2s ease-in-out}
+.fx .walking .char{animation:walkbob .35s ease-in-out infinite}
+@keyframes walkbob{50%{transform:translateY(-3px)}}
+.doc{display:none}.walking .doc{display:block}
+.fx #lines path{animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-16}}
+.fx .feed li.new{animation:feedIn .45s cubic-bezier(.2,.8,.3,1.2)}
+@keyframes feedIn{from{opacity:0;transform:translateX(-14px)}}
+.fx .counter.tick{animation:tickc .4s}
+@keyframes tickc{40%{transform:translateY(-3px);color:var(--accent)}}
+#panel{transition:transform .45s cubic-bezier(.25,1.35,.45,1),visibility .45s}
+
 </style>
 </head>
 <body>
@@ -72,6 +141,7 @@ aside h3{margin:0 0 8px;font-size:.95rem}
   <span class="badge" id="offline" hidden>Offline</span>
   <span class="spacer"></span>
   <span class="meta" id="updated"></span>
+  <button class="btn" id="fxBtn" aria-pressed="true">✨ Hiệu ứng: Bật</button>
   <button class="btn" id="refresh" aria-label="Làm mới dữ liệu">↻ Làm mới</button>
  </div>
  <div class="row" style="margin-top:8px" role="group" aria-label="Lọc theo trạng thái" id="chips"></div>
@@ -128,16 +198,16 @@ const nameOf=id=>id==='tam'?'Tâm':(bots.find(b=>b.id===id)?.name||id||'—');
 function propSVG(p){
  const m={
  lead:`<rect x="4" y="8" width="26" height="18" rx="2" fill="#fff" stroke="#b9b3c4"/><path d="M8 20l5-5 4 3 7-7" stroke="#5b6fd6" stroke-width="2" fill="none"/><rect x="30" y="66" width="60" height="16" rx="4" fill="#b98a5e"/><rect x="30" y="66" width="60" height="5" rx="2" fill="#cfa275"/>`,
- code:`<rect x="18" y="52" width="28" height="18" rx="2" fill="#2d2a32"/><rect x="50" y="52" width="28" height="18" rx="2" fill="#2d2a32"/><g class="screen-line"><rect x="21" y="56" width="14" height="2" fill="#7ee0a1"/><rect x="21" y="61" width="20" height="2" fill="#8ab4ff"/><rect x="53" y="56" width="18" height="2" fill="#ffd36e"/><rect x="53" y="61" width="12" height="2" fill="#7ee0a1"/></g><rect x="22" y="72" width="52" height="12" rx="3" fill="#b98a5e"/>`,
+ code:`<rect x="18" y="52" width="28" height="18" rx="2" fill="#2d2a32"/><rect x="50" y="52" width="28" height="18" rx="2" fill="#2d2a32"/><g class="screen-line"><svg x="18" y="52" width="60" height="18"><g class="scroll"><rect x="3" y="14" width="10" height="2" fill="#ffd36e"/><rect x="3" y="19" width="16" height="2" fill="#8ab4ff"/><rect x="35" y="14" width="14" height="2" fill="#7ee0a1"/><rect x="35" y="19" width="9" height="2" fill="#ffd36e"/><rect x="3" y="4" width="14" height="2" fill="#7ee0a1"/><rect x="3" y="9" width="20" height="2" fill="#8ab4ff"/><rect x="35" y="4" width="18" height="2" fill="#ffd36e"/><rect x="35" y="9" width="12" height="2" fill="#7ee0a1"/></g></svg><rect x="21" y="-99" width="14" height="2" fill="#7ee0a1"/><rect x="21" y="61" width="20" height="2" fill="#8ab4ff"/><rect x="53" y="56" width="18" height="2" fill="#ffd36e"/><rect x="53" y="61" width="12" height="2" fill="#7ee0a1"/></g><rect x="22" y="72" width="52" height="12" rx="3" fill="#b98a5e"/>`,
  qc:`<rect x="70" y="40" width="20" height="26" rx="2" fill="#fff" stroke="#b9b3c4"/><path d="M73 47l2 2 4-4M73 55l2 2 4-4" stroke="#2e9e5b" stroke-width="1.6" fill="none"/><circle cx="16" cy="58" r="7" fill="#dff1ff" stroke="#5f5a66" stroke-width="2.5"/><path d="M21 63l6 6" stroke="#5f5a66" stroke-width="3" stroke-linecap="round"/>`,
- books:`<rect x="2" y="30" width="16" height="54" fill="#a8774f"/><rect x="4" y="34" width="4" height="12" fill="#e07a5f"/><rect x="9" y="33" width="4" height="13" fill="#5b6fd6"/><rect x="4" y="52" width="5" height="12" fill="#5fa04e"/><rect x="10" y="51" width="4" height="13" fill="#f5b400"/><rect x="62" y="70" width="18" height="6" rx="1" fill="#8a6bd1"/><rect x="64" y="65" width="16" height="5" rx="1" fill="#f2c94c"/>`,
- coffee:`<rect x="72" y="44" width="20" height="30" rx="3" fill="#6b6f7a"/><rect x="76" y="50" width="12" height="7" rx="1" fill="#2d2a32"/><rect x="78" y="63" width="8" height="8" rx="1" fill="#fff"/><path d="M80 60c0-3 3-3 3-6" stroke="#c9c5cf" stroke-width="1.5" fill="none"/>`,
- farm:`<path d="M10 84v-16M10 72c-6-2-6-8 0-8M10 70c6-2 6-8 0-8" stroke="#5fa04e" stroke-width="3" fill="none"/><rect x="4" y="80" width="12" height="8" rx="2" fill="#c97b4a"/><text x="70" y="62" font-size="13">🐔</text><text x="72" y="80" font-size="13">🐷</text>`,
+ books:`<rect x="2" y="30" width="16" height="54" fill="#a8774f"/><rect x="4" y="34" width="4" height="12" fill="#e07a5f"/><rect x="9" y="33" width="4" height="13" fill="#5b6fd6"/><rect x="4" y="52" width="5" height="12" fill="#5fa04e"/><rect x="10" y="51" width="4" height="13" fill="#f5b400"/><rect x="62" y="70" width="18" height="6" rx="1" fill="#8a6bd1"/><rect x="64" y="65" width="16" height="5" rx="1" fill="#f2c94c"/><rect class="flip" x="72" y="58" width="8" height="7" fill="#fff" stroke="#c9c5cf" stroke-width=".6"/>`,
+ coffee:`<rect x="72" y="44" width="20" height="30" rx="3" fill="#6b6f7a"/><rect x="76" y="50" width="12" height="7" rx="1" fill="#2d2a32"/><rect x="78" y="63" width="8" height="8" rx="1" fill="#fff"/><g class="steam" stroke="#b7b3be" stroke-width="1.5" fill="none"><path d="M79 42c-2-3 2-5 0-8"/><path d="M85 42c-2-3 2-5 0-8"/></g>`,
+ farm:`<path class="sway" d="M10 84v-16M10 72c-6-2-6-8 0-8M10 70c6-2 6-8 0-8" stroke="#5fa04e" stroke-width="3" fill="none"/><rect x="4" y="80" width="12" height="8" rx="2" fill="#c97b4a"/><text class="hop" x="70" y="62" font-size="13">🐔</text><text x="72" y="80" font-size="13">🐷</text>`,
  fabric:`<circle cx="80" cy="74" r="9" fill="#e07a5f"/><path d="M73 70q7 4 14 0M73 77q7 4 14 0" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="6" y="62" width="18" height="20" rx="2" fill="#81c3d7"/><path d="M6 68h18M6 74h18" stroke="#fff" stroke-dasharray="2 2"/>`,
- parcel:`<rect x="4" y="66" width="18" height="16" rx="2" fill="#d9a066"/><path d="M13 66v16" stroke="#b07d47" stroke-width="2"/><rect x="8" y="54" width="14" height="12" rx="2" fill="#e3b07a"/><rect x="68" y="20" width="26" height="12" rx="3" fill="#ee4d2d"/><text x="81" y="29" font-size="7" fill="#fff" text-anchor="middle" font-weight="700">SHOP</text>`,
+ parcel:`<rect x="4" y="66" width="18" height="16" rx="2" fill="#d9a066"/><path d="M13 66v16" stroke="#b07d47" stroke-width="2"/><rect class="slide" x="8" y="54" width="14" height="12" rx="2" fill="#e3b07a"/><rect x="68" y="20" width="26" height="12" rx="3" fill="#ee4d2d"/><text x="81" y="29" font-size="7" fill="#fff" text-anchor="middle" font-weight="700">SHOP</text>`,
  board:`<rect x="66" y="34" width="28" height="34" rx="2" fill="#fff4c2" stroke="#d9b54a"/><rect x="69" y="38" width="10" height="8" fill="#81c3d7"/><rect x="81" y="38" width="10" height="8" fill="#f4a3a3"/><rect x="69" y="49" width="10" height="8" fill="#a3d9a5"/><rect x="81" y="49" width="10" height="8" fill="#d7b4f3"/>`,
- grok:`<rect x="70" y="66" width="22" height="16" rx="6" fill="#9fc5a8"/><circle cx="10" cy="70" r="8" fill="#5fa04e"/><rect x="7" y="74" width="6" height="10" fill="#c97b4a"/>`,
- egg:`<rect x="66" y="70" width="28" height="14" rx="4" fill="#f2b6a0"/><path d="M66 70a14 12 0 0 1 28 0" fill="#dff1ff" opacity=".8" stroke="#a7c4dd"/><ellipse cx="80" cy="68" rx="6" ry="8" fill="#fff3d6" stroke="#e6c98f"/>`};
+ grok:`<rect x="70" y="66" width="22" height="16" rx="6" fill="#9fc5a8"/><circle class="sway" cx="10" cy="70" r="8" fill="#5fa04e"/><rect x="7" y="74" width="6" height="10" fill="#c97b4a"/>`,
+ egg:`<rect x="66" y="70" width="28" height="14" rx="4" fill="#f2b6a0"/><path d="M66 70a14 12 0 0 1 28 0" fill="#dff1ff" opacity=".8" stroke="#a7c4dd"/><ellipse class="wobble" cx="80" cy="68" rx="6" ry="8" fill="#fff3d6" stroke="#e6c98f"/>`};
  return m[p]||'';
 }
 function botSVG(b){
@@ -146,21 +216,29 @@ function botSVG(b){
  return `<svg viewBox="0 0 96 96" aria-hidden="true">
  <ellipse cx="48" cy="88" rx="30" ry="5" fill="#000" opacity=".08"/>
  ${propSVG(b.prop)}
- <path d="M30 80q0-22 18-22t18 22z" fill="${b.shirt}"/>
- ${head}
- <circle cx="42" cy="39" r="1.8" fill="#2d2a32"/><circle cx="54" cy="39" r="1.8" fill="#2d2a32"/>
+ <g class="char"><path d="M30 80q0-22 18-22t18 22z" fill="${b.shirt}"/>
+ <g class="head">${head}
+ <g class="eyes"><circle cx="42" cy="39" r="1.8" fill="#2d2a32"/><circle cx="54" cy="39" r="1.8" fill="#2d2a32"/></g>
  <path d="M42 45q6 5 12 0" stroke="#2d2a32" stroke-width="1.8" fill="none" stroke-linecap="round"/>
- <circle cx="38" cy="44" r="2.5" fill="#f28b82" opacity=".45"/><circle cx="58" cy="44" r="2.5" fill="#f28b82" opacity=".45"/>
+ <circle cx="38" cy="44" r="2.5" fill="#f28b82" opacity=".45"/><circle cx="58" cy="44" r="2.5" fill="#f28b82" opacity=".45"/></g>
+ <rect class="doc" x="56" y="62" width="11" height="14" rx="1" fill="#fff" stroke="#b9b3c4"/>
  <g class="hands"><circle cx="35" cy="73" r="4" fill="${b.skin}"/><circle cx="61" cy="73" r="4" fill="${b.skin}"/></g>
+ </g><text class="part" x="22" y="30" font-size="9" fill="#5b6fd6">&lt;/&gt;</text><text class="part" x="66" y="28" font-size="9">✨</text>
+ <g class="bubble"><rect x="58" y="2" width="36" height="14" rx="7" fill="#fff3d6" stroke="#e6a100"/><text x="76" y="12" font-size="7.5" text-anchor="middle" fill="#7a4b00" font-weight="700">Chờ anh</text></g>
+ <g class="bang"><circle cx="70" cy="12" r="7" fill="#d0453a"/><text x="70" y="16" font-size="11" text-anchor="middle" fill="#fff" font-weight="800">!</text></g>
  <circle class="light" cx="48" cy="9" r="5" fill="${s.h}" stroke="#fff" stroke-width="2"/>
  </svg>`;
 }
 function floorSVG(r){return `<svg class="floor" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="${r.fl}"/><path d="M0 100L100 0" stroke="#fff" stroke-width=".4" opacity=".6"/><g stroke="#fff" stroke-width=".3" opacity=".5">${Array.from({length:10},(_,i)=>`<path d="M${i*10} 0V100M0 ${i*10}H100"/>`).join('')}</g></svg>`}
 
+const DECO={
+ lobby:`<svg class="deco" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#fff" stroke="#b9b3c4" stroke-width="2"/><line class="hand-h" x1="20" y1="20" x2="20" y2="11" stroke="#2d2a32" stroke-width="2.5" stroke-linecap="round"/><line class="hand-m" x1="20" y1="20" x2="20" y2="6" stroke="#5b6fd6" stroke-width="1.6" stroke-linecap="round"/><circle cx="20" cy="20" r="2" fill="#2d2a32"/></svg>`,
+ library:`<svg class="deco" style="width:56px" viewBox="0 0 56 40" aria-hidden="true"><rect x="1" y="1" width="54" height="38" rx="4" fill="#cfe8ff" stroke="#a8774f" stroke-width="2"/><g class="cloud"><ellipse cx="14" cy="18" rx="9" ry="5" fill="#fff"/><ellipse cx="20" cy="15" rx="6" ry="5" fill="#fff"/></g><path d="M28 1v38M1 20h54" stroke="#a8774f" stroke-width="1.5"/></svg>`,
+ swiftgas:`<svg class="deco" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="4" fill="#8a8794"/><g class="fan" fill="#c9c5cf"><ellipse cx="20" cy="9" rx="4" ry="9"/><ellipse cx="20" cy="31" rx="4" ry="9"/><ellipse cx="9" cy="20" rx="9" ry="4"/><ellipse cx="31" cy="20" rx="9" ry="4"/></g><circle cx="20" cy="20" r="3" fill="#5f5a66"/></svg>`};
 function buildOffice(){
- $('office').innerHTML=ROOMS.map(r=>`<section class="room${r.wide?' wide':''}" aria-labelledby="rm-${r.id}">${floorSVG(r)}<h2 id="rm-${r.id}" style="position:relative;z-index:1">${r.e} ${esc(r.n)}</h2><div class="bots" id="room-${r.id}"></div></section>`).join('');
+ $('office').innerHTML=ROOMS.map((r,i)=>`<section class="room${r.wide?' wide':''}" style="--i:${i}" aria-labelledby="rm-${r.id}">${floorSVG(r)}<div class="rays"></div>${DECO[r.id]||''}<h2 id="rm-${r.id}" style="position:relative;z-index:1">${r.e} ${esc(r.n)}</h2><div class="bots" id="room-${r.id}"></div></section>`).join('');
  $('chips').innerHTML=[['all','Tất cả',null],...Object.entries(ST).map(([k,v])=>[k,v.l,v.c])].map(([k,l,c])=>`<button class="chip" data-f="${k}" aria-pressed="${k===filter}">${c?`<span class="dot" style="background:${c}"></span>`:''}${l}</button>`).join('');
- $('chips').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;filter=b.dataset.f;[...$('chips').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.f===filter));render()};
+ $('chips').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;filter=b.dataset.f;[...$('chips').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.f===filter));applyFilter()};
 }
 function render(){
  ROOMS.forEach(r=>{const el=$('room-'+r.id);el.innerHTML=''});
@@ -169,21 +247,23 @@ function render(){
   const s=ST[b.status]||ST.unknown;
   const vis=(filter==='all'||b.status===filter)&&(!query||b.name.toLowerCase().includes(query));
   const btn=document.createElement('button');
+  btn.style.setProperty('--d',(-(b.id.length*1.37+b.id.charCodeAt(0)%7))+'s');
   btn.className=`bot ${b.status}${vis?'':' hide'}${b._pulse?' pulse':''}`;btn.id='bot-'+b.id;btn.dataset.id=b.id;
   btn.setAttribute('aria-label',`${b.name}, ${s.l}${b.currentTask?', '+b.currentTask:''}`);
   btn.innerHTML=botSVG(b)+`<span class="nm">${esc(b.name)}</span><span class="tk">${esc(b.currentTask||s.l)}</span>`;
   btn.onclick=()=>openPanel(b.id);room.appendChild(btn);
  });
  const w=bots.filter(b=>b.status==='working').length,wt=bots.filter(b=>b.status==='waiting');
- $('counter').textContent=`${w} đang làm · ${wt.length} chờ anh`;
+ {const c=$('counter'),t=`${w} đang làm · ${wt.length} chờ anh`;if(c.textContent&&c.textContent!==t){c.classList.remove('tick');void c.offsetWidth;c.classList.add('tick')}c.textContent=t}
  $('trayN').textContent=wt.length?`(${wt.length})`:'';
  $('tray').innerHTML=wt.length?wt.map(b=>`<button data-id="${b.id}"><span class="dot" style="background:var(--amber)"></span><span><b>${esc(b.name)}</b><br><span class="meta">${esc(b.currentTask||'Đang chờ anh')}</span></span></button>`).join(''):'<p class="empty">Không có bot nào đang chờ anh 🎉</p>';
  $('tray').querySelectorAll('button').forEach(x=>x.onclick=()=>{const t=$('bot-'+x.dataset.id);t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});t.focus();openPanel(x.dataset.id)});
- $('feed').innerHTML=feed.length?feed.map(f=>`<li><span class="meta">${f.t}</span> · <b>${esc(f.n)}</b>: ${f.a} → ${f.b}${f.k?` — ${esc(f.k)}`:''}</li>`).join(''):'<li class="empty">Chưa có thay đổi nào.</li>';
- bots.forEach(b=>b._pulse=false);
+ $('feed').innerHTML=feed.length?feed.map(f=>`<li class="${f.fresh?'new':''}"><span class="meta">${f.t}</span> · <b>${esc(f.n)}</b>: ${f.a} → ${f.b}${f.k?` — ${esc(f.k)}`:''}</li>`).join(''):'<li class="empty">Chưa có thay đổi nào.</li>';
+ bots.forEach(b=>b._pulse=false);feed.forEach(f=>f.fresh=false);
  if(openId)fillPanel(openId);
  drawLines();tick();
 }
+function applyFilter(){bots.forEach(b=>{const e=$('bot-'+b.id);if(e)e.classList.toggle('hide',!((filter==='all'||b.status===filter)&&(!query||b.name.toLowerCase().includes(query))))})}
 function drawLines(){
  const svg=$('lines');svg.hidden=!showLines;if(!showLines)return;
  const base=svg.parentElement.getBoundingClientRect();
@@ -209,7 +289,7 @@ function apply(d){
   const base=ROSTER.find(r=>r.id===id)||{id,name:id,role:'',room:'lobby',reportsTo:'tam',skin:'#f2c9a5',shirt:'#9aa5b1',prop:''};
   const prev=bots.find(b=>b.id===id),f=map.get(id);
   const nb={...base,...Object.fromEntries(Object.entries(f||{}).filter(([,v])=>v!==undefined)),status:f?f.status:'unknown',currentTask:f?f.currentTask:''};
-  if(hasData&&prev&&prev.status!==nb.status){nb._pulse=true;feed.unshift({t:now,n:nb.name,a:ST[prev.status].l,b:ST[nb.status].l,k:nb.currentTask})}
+  if(hasData&&prev&&prev.status!==nb.status){nb._pulse=true;feed.unshift({t:now,n:nb.name,a:ST[prev.status].l,b:ST[nb.status].l,k:nb.currentTask,fresh:true})}
   return nb});
  feed=feed.slice(0,20);updatedAt=d.updatedAt;hasData=true;
 }
@@ -222,9 +302,28 @@ async function load(){
 function tick(){const t=updatedAt?Date.parse(updatedAt):lastOk;if(!t){$('updated').textContent='Dữ liệu mẫu';return}
  const m=Math.max(0,Math.round((Date.now()-t)/60000));$('updated').textContent=m<1?'Cập nhật vừa xong':`Cập nhật ${m} phút trước`}
 $('refresh').onclick=load;
-$('q').oninput=e=>{query=e.target.value.trim().toLowerCase();render()};
+$('q').oninput=e=>{query=e.target.value.trim().toLowerCase();applyFilter()};
 $('toggleLines').onclick=e=>{showLines=!showLines;e.currentTarget.setAttribute('aria-pressed',showLines);drawLines()};
 addEventListener('resize',drawLines);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let fx=localStorage.getItem('botoffice.fx');fx=fx===null?!RM:fx==='1';
+function setFx(v){fx=v;document.body.classList.toggle('fx',v);const b=$('fxBtn');b.textContent='✨ Hiệu ứng: '+(v?'Bật':'Tắt');b.setAttribute('aria-pressed',v);localStorage.setItem('botoffice.fx',v?'1':'0')}
+$('fxBtn').onclick=()=>setFx(!fx);setFx(fx);
+document.addEventListener('visibilitychange',()=>document.body.classList.toggle('paused',document.hidden));
+let walking=false;
+function walk(){
+ if(!fx||document.hidden||walking||openId)return;
+ const c=bots.filter(b=>b.reportsTo&&b.reportsTo!=='tam'&&$('bot-'+b.reportsTo));const pairs=c.map(b=>[b.id,b.reportsTo]).concat(c.map(b=>[b.reportsTo,b.id]));
+ if(!pairs.length)return;const [a,t]=pairs[Math.floor(Math.random()*pairs.length)];
+ const ea=$('bot-'+a),et=$('bot-'+t);if(!ea||!et||ea.classList.contains('hide'))return;
+ const ra=ea.getBoundingClientRect(),rt=et.getBoundingClientRect();const dx=(rt.left-ra.left)*0.72,dy=rt.top-ra.top;
+ walking=true;ea.classList.add('walking');ea.style.transform=`translate(${dx}px,${dy}px)`;
+ setTimeout(()=>{ea.style.transform=`translate(${dx}px,${dy}px)`},2300);
+ setTimeout(()=>{ea.style.transform='';},4200);
+ setTimeout(()=>{ea.classList.remove('walking');walking=false},6500);
+}
+(function sched(){setTimeout(()=>{walk();sched()},15000+Math.random()*15000)})();
+window.__walk=()=>{walking=false;walk()};
 buildOffice();render();load();setInterval(load,POLL);setInterval(tick,30000);
 </script>
 </body>
