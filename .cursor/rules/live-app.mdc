@@ -1,0 +1,11 @@
+---
+description: Cursor Live App deployment constraints for Bot Office
+alwaysApply: true
+---
+
+- This repo is packaged as a **private** Cursor Live App behind Cursor SSO (not public).
+- Preferred publish slug: `bot-office`.
+- Production build: `npm run build` → static output in `dist/`.
+- Do not redesign the Bot Office UI; preserve animations, effects toggle, reduced-motion, and mobile layout.
+- `bots.json` at repo root is the data source; the client loads `./bots.json`.
+- No secrets in source files; no committed `.env` files.
