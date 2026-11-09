@@ -1,0 +1,14 @@
+{
+  "name": "bot-office",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && cp bots.json dist/bots.json",
+    "preview": "vite preview --host"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  }
+}
